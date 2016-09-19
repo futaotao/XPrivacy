@@ -76,7 +76,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+// test
 public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
