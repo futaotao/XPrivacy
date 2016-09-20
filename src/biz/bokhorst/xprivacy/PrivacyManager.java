@@ -1298,6 +1298,82 @@ public class PrivacyManager {
 		return "";
 	}
 
+	/**
+	 * @author Futao
+	 * @desc SERIAL
+	 */
+	public static String GetRandomSerial() {
+		return getRandomProp("SERIAL");
+	}
+
+	/**
+	 * @author Futao
+	 * @desc Mac
+	 */
+	public static String GetRandomMac() {
+		return getRandomProp("MAC");
+	}
+	
+	/**
+	 * @author Futao
+	 * @desc IMEI
+	 */
+	public static String GetRandomIMEI(){
+		return getRandomProp("IMEI");
+	}
+	
+	/**
+	 * @author Futao
+	 * @desc ANDROID_ID
+	 */
+	public static String GetRandomAndroidId(){
+		return getRandomProp("ANDROID_ID");
+	}
+
+	/**
+	 * @author Futao
+	 * @desc mcc
+	 */
+	public static String GetRandomMcc() {
+		return "460";
+	}
+
+	/**
+	 * @author Futao
+	 * @desc mnc
+	 */
+	public static String GetRandomMnc() {
+		String[] a = new String[] { "00", "01", "02", "03", "07" };
+		Random random = new Random();
+		// 00 ： 01 ： 02 ：03 : 07
+		// 7 : 5 : 15 : 4 : 2
+
+		int v = random.nextInt(33);
+		if (v < 7) {
+			return a[0];
+		} else if (v < (7 + 5)) {
+			return a[1];
+		} else if (v < (7 + 5 + 15)) {
+			return a[2];
+		} else if (v < (7 + 5 + 15 + 4)) {
+			return a[3];
+		} else {
+			return a[4];
+		}
+	}
+
+	/**
+	 * @author Futao
+	 * @desc SubscriberId
+	 */
+	public static String GetRandomSubscriberId() {
+		Random r = new Random();
+		String subscriber = "";
+		while (subscriber.length() < 10)
+			subscriber += Character.forDigit(r.nextInt(10), 10);
+		return subscriber;
+	}
+
 	private static char getLuhnDigit(String x) {
 		// http://en.wikipedia.org/wiki/Luhn_algorithm
 		int sum = 0;

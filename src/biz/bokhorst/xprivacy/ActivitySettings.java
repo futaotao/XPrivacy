@@ -251,7 +251,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		boolean enabled = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRestricted, true);
 
 		// Common
-		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false);
+		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, true);
 		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "");
 		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "");
 		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "");

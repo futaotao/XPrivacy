@@ -9,12 +9,14 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -261,51 +263,108 @@ public class UpdateService extends Service {
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
 
-		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false)) {
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLatitude))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
+		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, true)) {
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLatitude))
+			// listWork.add(new PSetting(uid, "",
+			// PrivacyManager.cSettingLatitude,
+			// PrivacyManager.getRandomProp("LAT")));
 
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLongitude))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLongitude, PrivacyManager
-						.getRandomProp("LON")));
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLongitude))
+			// listWork.add(new PSetting(uid, "",
+			// PrivacyManager.cSettingLongitude, PrivacyManager
+			// .getRandomProp("LON")));
 
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAltitude))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAltitude))
+			// listWork.add(new PSetting(uid, "",
+			// PrivacyManager.cSettingAltitude,
+			// PrivacyManager.getRandomProp("ALT")));
 
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingPhone))
+			// listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone,
+			// PrivacyManager.getRandomProp("PHONE")));
+
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingGsfId))
+			// listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId,
+			// PrivacyManager.getRandomProp("GSF_ID")));
+
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAdId))
+			// listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId,
+			// PrivacyManager
+			// .getRandomProp("AdvertisingId")));
+
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingCountry))
+			// listWork.add(new PSetting(uid, "",
+			// PrivacyManager.cSettingCountry, PrivacyManager
+			// .getRandomProp("ISO3166")));
+
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
+			// listWork.add(new PSetting(uid, "",
+			// PrivacyManager.cSettingSubscriber, PrivacyManager
+			// .getRandomProp("SubscriberId")));
+
+			// if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSSID))
+			// listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID,
+			// PrivacyManager.getRandomProp("SSID")));
+
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLongitude, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAltitude, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingCountry, ""));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, ""));
+
+			/************ 每个app 请求下来的都不相同 ***********/
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager
-						.getRandomProp("SERIAL")));
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager.GetRandomSerial()));
 
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingPhone))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.GetRandomMac()));
 
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.GetRandomIMEI()));
 
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager
-						.getRandomProp("ANDROID_ID")));
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager.GetRandomAndroidId()));
 
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingGsfId))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAdId))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId, PrivacyManager
-						.getRandomProp("AdvertisingId")));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingCountry))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingCountry, PrivacyManager
-						.getRandomProp("ISO3166")));
+			String mcc = PrivacyManager.GetRandomMcc();
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, mcc));
+			String mnc = PrivacyManager.GetRandomMnc();
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, mnc));
 
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, PrivacyManager
-						.getRandomProp("SubscriberId")));
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, mcc + mnc
+						+ PrivacyManager.GetRandomSubscriberId()));
 
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSSID))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
+			/************ 每个app 请求下来的都相同 ***********/
+//			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//
+//			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, preferences.getString(
+//						PrivacyManager.cSettingSerial, "")));
+//
+//			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, preferences.getString(
+//						PrivacyManager.cSettingMac, "")));
+//
+//			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, preferences.getString(
+//						PrivacyManager.cSettingImei, "")));
+//
+//			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, preferences.getString(
+//						PrivacyManager.cSettingId, "")));
+//
+//			String pMcc = preferences.getString(PrivacyManager.cSettingMcc, "");
+//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, pMcc));
+//			String pMnc = preferences.getString(PrivacyManager.cSettingMnc, "");
+//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, pMnc));
+//
+//			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, pMcc + pMnc
+//						+ preferences.getString(PrivacyManager.cSettingSubscriber, "")));
+
 		}
 
 		return listWork;
