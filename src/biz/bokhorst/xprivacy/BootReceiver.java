@@ -29,13 +29,21 @@ public class BootReceiver extends BroadcastReceiver {
 			try {
 				if (PrivacyService.getClient().databaseCorrupt()) {
 					// Build notification
-					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-					notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-					notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-					notificationBuilder.setContentText(context.getString(R.string.msg_corrupt));
-					notificationBuilder.setWhen(System.currentTimeMillis());
-					notificationBuilder.setAutoCancel(true);
-					Notification notification = notificationBuilder.build();
+
+					Notification notification = new Notification.Builder(context).setSmallIcon(R.drawable.ic_launcher)
+							.setContentTitle(context.getString(R.string.app_name))
+							.setContentText(context.getString(R.string.msg_corrupt)).setContentIntent(null)
+							.setAutoCancel(true).setWhen(System.currentTimeMillis()).build();
+
+					// NotificationCompat.Builder notificationBuilder = new
+					// NotificationCompat.Builder(context);
+					// notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+					// notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+					// notificationBuilder.setContentText(context.getString(R.string.msg_corrupt));
+					// //
+					// notificationBuilder.setWhen(System.currentTimeMillis());
+					// notificationBuilder.setAutoCancel(true);
+					// Notification notification = notificationBuilder.build();
 
 					// Display notification
 					notificationManager.notify(Util.NOTIFY_CORRUPT, notification);
@@ -58,15 +66,21 @@ public class BootReceiver extends BroadcastReceiver {
 					xInstallerIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
 			// Build notification
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-			notificationBuilder.setContentText(context.getString(R.string.app_notenabled));
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			notificationBuilder.setAutoCancel(true);
-			if (pi != null)
-				notificationBuilder.setContentIntent(pi);
-			Notification notification = notificationBuilder.build();
+			// NotificationCompat.Builder notificationBuilder = new
+			// NotificationCompat.Builder(context);
+			// notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			// notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+			// notificationBuilder.setContentText(context.getString(R.string.app_notenabled));
+			// // notificationBuilder.setWhen(System.currentTimeMillis());
+			// notificationBuilder.setAutoCancel(true);
+			// if (pi != null)
+			// notificationBuilder.setContentIntent(pi);
+			// Notification notification = notificationBuilder.build();
+
+			Notification notification = new Notification.Builder(context).setSmallIcon(R.drawable.ic_launcher)
+					.setContentTitle(context.getString(R.string.app_name))
+					.setContentText(context.getString(R.string.app_notenabled)).setContentIntent(pi)
+					.setAutoCancel(true).setWhen(System.currentTimeMillis()).build();
 
 			// Display notification
 			notificationManager.notify(Util.NOTIFY_NOTXPOSED, notification);
@@ -88,4 +102,5 @@ public class BootReceiver extends BroadcastReceiver {
 		preferences.edit().putString(PrivacyManager.cSettingSubscriber, PrivacyManager.GetRandomSubscriberId())
 				.commit();
 	}
+
 }
