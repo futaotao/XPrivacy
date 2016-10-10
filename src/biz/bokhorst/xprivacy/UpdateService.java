@@ -316,54 +316,54 @@ public class UpdateService extends Service {
 			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, ""));
 
 			/************ 每个app 请求下来的都不相同 ***********/
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager.GetRandomSerial()));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.GetRandomMac()));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.GetRandomIMEI()));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager.GetRandomAndroidId()));
-
-			String mcc = PrivacyManager.GetRandomMcc();
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, mcc));
-			String mnc = PrivacyManager.GetRandomMnc();
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, mnc));
-
-			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
-				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, mcc + mnc
-						+ PrivacyManager.GetRandomSubscriberId()));
-
-			/************ 每个app 请求下来的都相同 ***********/
-//			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//
 //			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
-//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, preferences.getString(
-//						PrivacyManager.cSettingSerial, "")));
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager.GetRandomSerial()));
 //
 //			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
-//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, preferences.getString(
-//						PrivacyManager.cSettingMac, "")));
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.GetRandomMac()));
 //
 //			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
-//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, preferences.getString(
-//						PrivacyManager.cSettingImei, "")));
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.GetRandomIMEI()));
 //
 //			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
-//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, preferences.getString(
-//						PrivacyManager.cSettingId, "")));
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager.GetRandomAndroidId()));
 //
-//			String pMcc = preferences.getString(PrivacyManager.cSettingMcc, "");
-//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, pMcc));
-//			String pMnc = preferences.getString(PrivacyManager.cSettingMnc, "");
-//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, pMnc));
+//			String mcc = PrivacyManager.GetRandomMcc();
+//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, mcc));
+//			String mnc = PrivacyManager.GetRandomMnc();
+//			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, mnc));
 //
 //			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
-//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, pMcc + pMnc
-//						+ preferences.getString(PrivacyManager.cSettingSubscriber, "")));
+//				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, mcc + mnc
+//						+ PrivacyManager.GetRandomSubscriberId()));
+
+			/************ 每个app 请求下来的都相同 ***********/
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, preferences.getString(
+						PrivacyManager.cSettingSerial, "")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, preferences.getString(
+						PrivacyManager.cSettingMac, "")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, preferences.getString(
+						PrivacyManager.cSettingImei, "")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, preferences.getString(
+						PrivacyManager.cSettingId, "")));
+
+			String pMcc = preferences.getString(PrivacyManager.cSettingMcc, "");
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMcc, pMcc));
+			String pMnc = preferences.getString(PrivacyManager.cSettingMnc, "");
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMnc, pMnc));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, pMcc + pMnc
+						+ preferences.getString(PrivacyManager.cSettingSubscriber, "")));
 
 		}
 

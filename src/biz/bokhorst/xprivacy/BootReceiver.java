@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,8 +10,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 
 public class BootReceiver extends BroadcastReceiver {
 
@@ -93,14 +96,51 @@ public class BootReceiver extends BroadcastReceiver {
 	 */
 	private void GenerateRandomVal(Context context) {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		preferences.edit().putString(PrivacyManager.cSettingSerial, PrivacyManager.GetRandomSerial()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingMac, PrivacyManager.GetRandomMac()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingImei, PrivacyManager.GetRandomIMEI()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingId, PrivacyManager.GetRandomAndroidId()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingMcc, PrivacyManager.GetRandomMcc()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingMnc, PrivacyManager.GetRandomMnc()).commit();
-		preferences.edit().putString(PrivacyManager.cSettingSubscriber, PrivacyManager.GetRandomSubscriberId())
-				.commit();
+
+		String serial = PrivacyManager.GetRandomSerial();
+		preferences.edit().putString(PrivacyManager.cSettingSerial, serial).commit();
+
+		String mac = PrivacyManager.GetRandomMac();
+		preferences.edit().putString(PrivacyManager.cSettingMac, mac).commit();
+
+		// 通过/system/etc/init.androVM.sh (IMEI) 来修改
+		String imei = PrivacyManager.GetRandomIMEI();
+		preferences.edit().putString(PrivacyManager.cSettingImei, imei).commit();
+
+		String androidId = PrivacyManager.GetRandomAndroidId();
+		preferences.edit().putString(PrivacyManager.cSettingId, androidId).commit();
+
+		String mcc = PrivacyManager.GetRandomMcc();
+		preferences.edit().putString(PrivacyManager.cSettingMcc, mcc).commit();
+
+		String mnc = PrivacyManager.GetRandomMnc();
+		preferences.edit().putString(PrivacyManager.cSettingMnc, mnc).commit();
+
+		String subscriber = PrivacyManager.GetRandomSubscriberId();
+		preferences.edit().putString(PrivacyManager.cSettingSubscriber, subscriber).commit();
+
+		String content = serial + "_" + mac + "_" + imei + "_" + androidId + "_" + mcc + mnc + subscriber;
+		try {
+			saveToSDCard(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Futao
+	 * @desc 保存内容到sd卡
+	 */
+	private void saveToSDCard(String content) throws Exception {
+		String sdPath = "/sdcard/random";
+		File file = new File(sdPath);
+		//判断没有时创建一个
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileOutputStream outStream = new FileOutputStream(file);
+		outStream.write(content.getBytes());
+		outStream.close();
 	}
 
 }
